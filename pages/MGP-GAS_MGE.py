@@ -48,7 +48,7 @@ palette_other = [
 #----LOAD DATA
 #return time sereies from 2027 to Sept 2025
 # these are gas price from GSE related to MG market EUR/MWh
-df_at_hist = pd.read_parquet(r"mgp_gas_data\history\gse_gas_mg.parquet")
+df_at_hist = pd.read_parquet("mgp_gas_data/history/gse_gas_mg.parquet")
 # ensure it's a DatetimeIndex
 df_at_hist.index = pd.to_datetime(df_at_hist.index)
 # make it a Series (optional, but convenient)
