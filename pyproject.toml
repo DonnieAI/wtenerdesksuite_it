@@ -1,0 +1,10 @@
+[project]
+name = "ENERDESKSUITE_IT"
+version = "0.1.0"
+requires-python = "==3.12.6"
+dependencies = [
+    "lxml>=6.0.2",
+    "markdown>=3.10.2",
+    "plotly>=6.5.2",
+    "streamlit>=1.54.0",
+]
