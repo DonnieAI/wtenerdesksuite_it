@@ -55,8 +55,7 @@ df_at_hist.index = pd.to_datetime(df_at_hist.index)
 ts_at_hist = df_at_hist["MG_PRICE"].sort_index()
 
 
-df_at_2025_2026 = pd.read_csv(
-    r"mgp_gas_data\live\Annotermico_2025-2026.csv",
+df_at_2025_2026 = pd.read_csv("mgp_gas_data/live/Annotermico_2025-2026.csv",
     usecols=["DAY", "MG_PRICE"],   # ignore those trailing empty columns
     dtype={"DAY": "string"}
 )

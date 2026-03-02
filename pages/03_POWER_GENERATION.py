@@ -55,10 +55,10 @@ color_map = {
 
 #DATA ELEBORATION
 # upload historical data 2021-2025
-df_hist=pd.read_parquet(r"terna_data\historical\terna_all.parquet")
+df_hist=pd.read_parquet("terna_data/historical/terna_all.parquet")
 
 #upload the recent 2026 data
-df_2026 = pd.read_csv(r"terna_data\live\terna_gen_2026.csv")
+df_2026 = pd.read_csv("terna_data/live/terna_gen_2026.csv")
 df_2026["Date"] = pd.to_datetime(
                             df_2026["Date"],
                             dayfirst=True,
