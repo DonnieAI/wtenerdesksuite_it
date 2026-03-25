@@ -159,8 +159,6 @@ def parse_number(value: Any) -> Optional[float]:
     except ValueError:
         return None
 
-
-
 def parse_percent(value: Any) -> Optional[float]:
     """
     If input has % then convert to fraction.

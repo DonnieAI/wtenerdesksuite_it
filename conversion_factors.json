@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "name": "energy_conversion_factors",
+    "version": "1.0",
+    "notes": [
+      "Natural gas reference based on user input: 1 MWh = 93.545 Smc",
+      "Equivalent to 1 Smc = 0.0106900422 MWh",
+      "Equivalent to about 38.484 MJ/Smc",
+      "1 MWh = 3.6 GJ = 3600 MJ",
+      "Hydrogen reference: LHV = 10.8 MJ/Smc"
+    ]
+  },
+  "universal": {
+    "energy": {
+      "MJ_per_GJ": 1000.0,
+      "GJ_per_MJ": 0.001,
+      "MJ_per_MWh": 3600.0,
+      "GJ_per_MWh": 3.6,
+      "MWh_per_GJ": 0.2777777778,
+      "kWh_per_MWh": 1000.0,
+      "MWh_per_kWh": 0.001
+    }
+  },
+  "natural_gas": {
+    "reference_basis": {
+      "Smc_per_MWh": 93.545
+    },
+    "conversion_factors": {
+      "MWh_per_Smc": 0.010690042225667271,
+      "kWh_per_Smc": 10.690042225667254,
+      "GJ_per_Smc": 0.03848415201240218,
+      "MJ_per_Smc": 38.48415201240218,
+      "Smc_per_GJ": 25.984722222222224,
+      "Smc_per_MJ": 0.025984722222222224,
+      "GJ_per_MWh": 3.6,
+      "MWh_per_GJ": 0.2777777777777778
+    }
+  },
+  "hydrogen": {
+    "reference_basis": {
+      "density_kg_per_Smc": 0.0899,
+      "LHV_MJ_per_Smc": 10.8
+    },
+    "conversion_factors": {
+      "MJ_per_Smc": 10.8,
+      "GJ_per_Smc": 0.0108,
+      "kWh_per_Smc": 3.0,
+      "MWh_per_Smc": 0.003,
+      "Smc_per_MWh": 333.3333333333333,
+      "kg_per_Smc": 0.0899,
+      "Smc_per_kg": 11.123470522803114,
+      "kWh_per_kg": 33.37041156840935,
+      "MWh_per_kg": 0.03337041156840935,
+      "MJ_per_kg": 120.13348164627363,
+      "GJ_per_kg": 0.12013348164627363
+    }
+  },
+  "emissions": {
+    "natural_gas": {
+      "co2_factor_t_per_mwh": 0.20196,
+      "co2_factor_t_per_gj": 0.0561
+    },
+    "grid_it": {
+      "co2_factor_t_per_mwh": 0.2665
+    }
+  }
+}

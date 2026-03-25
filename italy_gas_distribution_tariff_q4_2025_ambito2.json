@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "country": "Italy",
+    "service": "Natural gas distribution tariff",
+    "valid_from": "2025-10-01",
+    "valid_to": "2025-12-31",
+    "source_file": "Tariffa distribuzione gas naturale 4 trim 2025.pdf",
+    "ambito": {
+      "code": 2,
+      "name": "Nord Orientale",
+      "regions": [
+        "Lombardia",
+        "Trentino-Alto Adige",
+        "Veneto",
+        "Friuli-Venezia Giulia",
+        "Emilia-Romagna"
+      ]
+    },
+    "units": {
+      "variable_tariffs": "cEUR/Smc",
+      "fixed_tariffs": "EUR/year"
+    },
+    "notes": [
+      "GS is zero for points of delivery belonging to domestic customers under TIVG c. 2.3 letter a).",
+      "RE overall rate equals REmin where indicated in the source notes.",
+      "This JSON captures the main tariff table as parsed from the uploaded PDF. Validate against the official tariff before final billing use."
+    ]
+  },
+  "fixed_components_eur_per_year": {
+    "distribution_qf_dis_t1": {
+      "A_leq_G6": 38.35,
+      "B_G6_to_G40": 280.48,
+      "C_gt_G40": 578.63
+    },
+    "measurement_qf_mis_t1": {
+      "A_leq_G6": 26.95,
+      "B_G6_to_G40": 186.86,
+      "C_gt_G40": 383.77
+    },
+    "commercialization_qf_cot_t1": {
+      "A_leq_G6": 1.99,
+      "B_G6_to_G40": 1.99,
+      "C_gt_G40": 1.99
+    }
+  },
+  "variable_distribution_t3_dis_ceur_per_smc_by_consumption": [
+    {
+      "from_smc": 0,
+      "to_smc": 120,
+      "t3_dis": 0.0,
+      "ug1": 0.0,
+      "ug2c": 0.0387,
+      "ug3int": 0.0024,
+      "ug3ui": 0.6881,
+      "ug3ft": 0.3907,
+      "gs": 0.0,
+      "re_pre2023": 0.1186,
+      "rs": 0.0,
+      "vr": -0.33,
+      "st": 3.4837
+    },
+    {
+      "from_smc": 121,
+      "to_smc": 480,
+      "t3_dis": 7.2052,
+      "ug1": 4.96
+    },
+    {
+      "from_smc": 481,
+      "to_smc": 1560,
+      "t3_dis": 6.5948,
+      "vr": -21.63,
+      "st": 2.93
+    },
+    {
+      "from_smc": 1561,
+      "to_smc": 5000,
+      "t3_dis": 6.6225,
+      "st": 2.37
+    },
+    {
+      "from_smc": 5001,
+      "to_smc": 80000,
+      "t3_dis": 4.9484,
+      "st": 1.7
+    },
+    {
+      "from_smc": 80001,
+      "to_smc": 200000,
+      "t3_dis": 2.5066,
+      "st": 0.71
+    },
+    {
+      "from_smc": 200001,
+      "to_smc": 1000000,
+      "t3_dis": 1.2302,
+      "ug3ui": 0.1826,
+      "gs": 0.0,
+      "re_pre2023": 0.06,
+      "rs": 0.3422,
+      "vr": 0.0
+    },
+    {
+      "from_smc": 1000001,
+      "to_smc": null,
+      "t3_dis": 0.3422
+    }
+  ],
+  "re_component_281_2025_r_com_ceur_per_smc": {
+    "class_val": {
+      "agevolazione_1_6_fino_a_200000": {
+        "re_overall": 2.9417,
+        "re_g": 0.5476,
+        "re_tee": 0.4359,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      },
+      "agevolazione_7_8_oltre_200000": {
+        "re_overall": 1.5611,
+        "re_g": 0.2871,
+        "re_tee": 0.2219,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      }
+    },
+    "class_gne": {
+      "agevolazione_1_6_fino_a_200000": {
+        "re_overall": 0.5828,
+        "re_g": 0.0,
+        "re_tee": 0.0702,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      },
+      "agevolazione_7_8_oltre_200000": {
+        "re_overall": 0.3588,
+        "re_g": 0.0,
+        "re_tee": 0.0355,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      }
+    },
+    "class_0": {
+      "agevolazione_1_6_fino_a_200000": {
+        "re_overall": 0.13,
+        "re_g": 0.0,
+        "re_tee": 0.0,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      },
+      "agevolazione_7_8_oltre_200000": {
+        "re_overall": 0.13,
+        "re_g": 0.0,
+        "re_tee": 0.0,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      }
+    },
+    "class_fat": {
+      "agevolazione_1_6_fino_a_200000": {
+        "re_overall": 0.13,
+        "re_g": 0.0,
+        "re_tee": 0.0,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      },
+      "agevolazione_7_8_oltre_200000": {
+        "re_overall": 0.13,
+        "re_g": 0.0,
+        "re_tee": 0.0,
+        "remin": 0.05,
+        "gs_placeholder": 0.08
+      }
+    }
+  },
+  "meter_classes": {
+    "A_leq_G6": "GdM minore o uguale a G6",
+    "B_G6_to_G40": "GdM superiore a G6 e inferiore o uguale a G40",
+    "C_gt_G40": "GdM superiore a G40"
+  }
+}
