@@ -51,23 +51,23 @@ mj_per_smc = conv["natural_gas"]["conversion_factors"]["MJ_per_Smc"]
 
 
 #------------------------------------------
-st.title("🥛🇮🇹 Glass")
-st.caption("Source:elaboration by Wavetransition")
+st.title("🧀🇮🇹 Dairy")
+st.caption("Source: elaboration by Wavetransition")
 
 #--------------------------------------------------------------------------------------------
 st.divider()  # <--- Streamlit's built-in separator
 #-------------------------------------------------------
 
 
-c1,c2,c3  = st.columns(3)
+c1,c2,c3,c4,c5  = st.columns(5)
 
 with c1:
     st.subheader("Annual Production [t/y]")
     annual_production_t=st.number_input(
     "Annual Production [t/y]",
-    value=109500,
     min_value=0,
-    step=500,
+    value=2200,
+    step=5,
     key="annual_production_t"
 )
 
@@ -83,14 +83,37 @@ with c2:
     )
 
 with c3:
-    st.subheader("electricity need covered by CHP [%]")
+    st.subheader("electricity by CHP [%]")
     chp_ee_share_pct = st.number_input(
         "CHP electricity share [%]",
         min_value=0,
         max_value=100,
-        value=89,
+        value=0,
         step=1,
         key="chp_electricity_share_pct"
+    )
+
+with c4:
+    st.subheader("electricity by PV [MWh]")
+    electricity_from_PV_mwh = st.number_input(
+        "Ele PV [MWh]",
+        min_value=0,
+        max_value=100000,
+        value=426,
+        step=1,
+        key="Ele PV"
+    )
+
+
+with c5:
+    st.subheader("diesel fleet [liters]")
+    diesel_fleet_liter = st.number_input(
+        "diesel fleet [liters]",
+        min_value=0,
+        max_value=150000,
+        value=9150,
+        step=500,
+        key="diesel_fleet"
     )
 
 
@@ -105,70 +128,65 @@ st.write("")
 st.markdown(
     f"""
     <div style="display:flex; justify-content:center; align-items:center; gap:22px; margin:1.5rem 0; flex-wrap:wrap;">
-        <div style="background:{palette_blue[0]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Mixing</div>
+        <div style="background:{palette_blue[0]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Reception</div>
         <div style="font-size:28px; font-weight:700; color:white; margin:0 8px;">→</div>
-        <div style="background:{palette_blue[2]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Melting</div>
+        <div style="background:{palette_blue[2]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Processing</div>
         <div style="font-size:28px; font-weight:700; color:white; margin:0 8px;">→</div>
-        <div style="background:{palette_green[1]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Forming</div>
+        <div style="background:{palette_green[1]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Packaging & Cooling</div>
         <div style="font-size:28px; font-weight:700; color:white; margin:0 8px;">→</div>
-        <div style="background:{palette_other[0]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Finishing</div>
+        <div style="background:{palette_other[0]}; color:#1f1f1f; padding:12px 22px; border-radius:8px; font-weight:600; min-width:120px; text-align:center;">Distribution</div>
     </div>
     """,
     unsafe_allow_html=True
 )
 st.write("")
-
 h1, h2, h3 = st.columns([1.2, 2, 2])
-h1.markdown("**Process Phase**")
+h1.markdown("**Process Phase [MJ/t**")
 h2.markdown("**Specific Thermal Consumption [GJ/t]**")
 h3.markdown("**Specific Electrical Consumption [GJ/t]**")
-
+st.write("")
 r1c1, r1c2, r1c3 = st.columns([1.2, 2, 2])
-r1c1.write("Mixing")
-mixing_gas = r1c2.slider("mixing_gas", min_value=0.0, max_value=0.001, value=0.584, step=0.001, format="%.3f", key="mixing_gas")
-mixing_ee = r1c3.slider("mixing_ee", min_value=0.0, max_value=0.001, value=0.136, step=0.001, format="%.3f", key="mixing_ee")
+r1c1.write("reception")
+reception_gas = r1c2.slider("reception_gas", min_value=0.0, max_value=0.001, value=0.0, step=0.001, format="%.3f", key="reception_gas")
+reception_ee = r1c3.slider("reception_ee", min_value=0.0, max_value=0.001, value=0.0, step=0.001, format="%.3f", key="reception_ee")
 
 r2c1, r2c2, r2c3 = st.columns([1.2, 2, 2])
-r2c1.write("Melting")
-melting_gas = r2c2.slider("melting_gas", min_value=3.0, max_value=5.000, value=3.790, step=0.001, format="%.3f", key="melting_gas")
-melting_ee = r2c3.slider("melting_ee", min_value=0.5, max_value=2.000, value=0.888, step=0.001, format="%.3f", key="melting_ee")
+r2c1.write("processing")
+processing_gas = r2c2.slider("processing_gas", min_value=0.0, max_value=1.000, value=0.0, step=0.001, format="%.3f", key="processing_gas")
+processing_ee = r2c3.slider("processing_ee", min_value=0.0, max_value=1.000, value=0.0, step=0.001, format="%.3f", key="processing_ee")
 
 r3c1, r3c2, r3c3 = st.columns([1.2, 2, 2])
-r3c1.write("Forming")
-forming_gas = r3c2.slider("forming_gas", min_value=0.1, max_value=2.500, value=1.022, step=0.001, format="%.3f", key="forming_gas")
-forming_ee = r3c3.slider("forming_ee", min_value=0.0, max_value=2.000, value=0.233, step=0.001, format="%.3f", key="forming_ee")
+r3c1.write("pack")
+pack_gas = r3c2.slider("pack_gas", min_value=0.1, max_value=10.500, value=7.53, step=0.001, format="%.3f", key="pack_gas")
+pack_ee = r3c3.slider("pack_ee", min_value=0.0, max_value=10.000, value=8.23, step=0.001, format="%.3f", key="pack_ee")
 
 r4c1, r4c2, r4c3 = st.columns([1.2, 2, 2])
-r4c1.write("Finishing")
-finishing_gas = r4c2.slider("finishing_gas", min_value=0.0, max_value=2.000, value=0.584, step=0.001, format="%.3f", key="finishing_gas")
-finishing_ee = r4c3.slider("finishing_ee", min_value=0.0, max_value=2.000, value=0.13, step=0.001, format="%.3f", key="finishing_ee")
+r4c1.write("distribution")
+distribution_gas = r4c2.slider("distribution_gas", min_value=0.0, max_value=1.000, value=0.0, step=0.001, format="%.3f", key="distribution_gas")
+distribution_ee = r4c3.slider("distribution_ee", min_value=0.0, max_value=1.000, value=0.0, step=0.001, format="%.3f", key="distribution_ee")
 
-
-#----------OVERRAIDING TEMP
-#mixing_ee=0.594
 
 # Summary table
 st.write("")
 summary_table = pd.DataFrame({
     "Process Phase": [
-        "Mixing",
-        "Melting",
-        "Forming",
-        "Finishing",
-       
-    ],
+    "Reception",
+    "Processing",
+    "Packaging & Cooling",
+    "Distribution",
+        ],
     "Total Gas [GJ/y]": [
-        mixing_gas * annual_production_t,
-        melting_gas * annual_production_t,
-        forming_gas * annual_production_t,
-        finishing_gas * annual_production_t,
+        reception_gas * annual_production_t,
+        processing_gas * annual_production_t,
+        pack_gas * annual_production_t,
+        distribution_gas * annual_production_t,
         
     ],
     "Total Electricity [GJ/y]": [
-        mixing_ee * annual_production_t,
-        melting_ee * annual_production_t,
-        forming_ee * annual_production_t,
-        finishing_ee * annual_production_t,
+        reception_ee * annual_production_t,
+        processing_ee * annual_production_t,
+        pack_ee * annual_production_t,
+        distribution_ee * annual_production_t,
        
     ]
 })
@@ -177,9 +195,6 @@ total_gas_gj = summary_table["Total Gas [GJ/y]"].sum()
 total_electricity_gj = summary_table["Total Electricity [GJ/y]"].sum()
 total_energy_gj=total_gas_gj+total_electricity_gj
 specific_energy_GJ_t=total_energy_gj/annual_production_t
-#st.text(f"specific product energy is {specific_energy_GJ_t} GJ/t")
-#st.metric("Specific product energy", f"{specific_energy_GJ_t:,.2f} GJ/t")
-#st.markdown(f"**Specific product energy:** {specific_energy_GJ_t:,.2f} GJ/t")
 st.info(f"Specific product energy: {specific_energy_GJ_t:,.2f} GJ/t")
 
 # Add total row
@@ -190,7 +205,6 @@ total_row = pd.DataFrame({
 })
 
 summary_table = pd.concat([summary_table, total_row], ignore_index=True)
-
 st.subheader("Annual Energy Consumption by Process Phase")
 st.dataframe(
     summary_table.style.format({
@@ -200,60 +214,113 @@ st.dataframe(
     use_container_width=True
 )
 
-#-------------------------------------------------------
-
+# -------------------------------------------------------
+#ENERGY BREAKDOWN ANALYSIS
+# -------------------------------------------------------
+# Conversions
 gj_per_mwh = conv["universal"]["energy"]["GJ_per_MWh"]
 mwh_per_gj = conv["universal"]["energy"]["MWh_per_GJ"]
-mj_per_smc = conv["natural_gas"]["conversion_factors"]["MJ_per_Smc"]
 mwh_per_smc = conv["natural_gas"]["conversion_factors"]["MWh_per_Smc"]
 smc_per_mwh = conv["natural_gas"]["reference_basis"]["Smc_per_MWh"]
+mj_per_liter = conv["diesel"]["conversion_factors"]["MJ_per_liter"]
 
-# ---- Elaborations only in MWh ----
+# Totals in MWh
 total_gas_mwh = total_gas_gj * mwh_per_gj
 total_electricity_mwh = total_electricity_gj * mwh_per_gj
+diesel_mj_y = diesel_fleet_liter * mj_per_liter
+diesel_gj_y = diesel_mj_y / 1000
+diesel_mwh_y = diesel_gj_y / gj_per_mwh
 
-# ---- CHP assumptions ----
+# -------------------------------------------------------
+# PV electricity
+# assumes electricity_from_PV_mwh is already defined by slider/input
+electricity_from_PV_mwh = min(electricity_from_PV_mwh, total_electricity_mwh)
+
+# Remaining electricity demand after PV
+residual_electricity_after_pv_mwh = total_electricity_mwh - electricity_from_PV_mwh
+
+# -------------------------------------------------------
+# CHP assumptions
+chp_el_eff = 0.28
+chp_th_eff = 0.50
 chp_ee_share = chp_ee_share_pct / 100
-chp_electricity_mwh = total_electricity_mwh * chp_ee_share
-# once defined the part of electricity autogenerated I can calucate the gas for the chp
 
-chp_eff = 0.28
-process_gas_displaced_by_chp_mwh=chp_electricity_mwh/chp_eff  # MWh
+# CHP covers a share of the residual electricity demand after PV
+chp_electricity_mwh = residual_electricity_after_pv_mwh * chp_ee_share
+chp_electricity_mwh = min(chp_electricity_mwh, residual_electricity_after_pv_mwh)
 
-#chp_gas_share = chp_gas_share_pct / 100
+# Grid covers the remaining electricity demand
+grid_electricity_mwh = total_electricity_mwh - electricity_from_PV_mwh - chp_electricity_mwh
+grid_electricity_mwh = max(grid_electricity_mwh, 0.0)
 
-# ---- CHP electricity and size ----
+# CHP size
 if chp_hours > 0:
     chp_size_mw = chp_electricity_mwh / chp_hours
 else:
     chp_size_mw = 0.0
 
-# ---- Gas split from grid ----
-#process_gas_displaced_by_chp_mwh = total_gas_mwh * chp_gas_share
-gas_from_gas_grid_for_process_mwh = total_gas_mwh - process_gas_displaced_by_chp_mwh
-# ---- CHP gas requirement ----
-gas_needed_mwh = chp_electricity_mwh / chp_eff if chp_eff > 0 else 0.0
-gas_needed_gj = gas_needed_mwh * gj_per_mwh
-gas_needed_smc = gas_needed_mwh * smc_per_mwh
+# -------------------------------------------------------
+# CHP gas input
+gas_to_chp_mwh = chp_electricity_mwh / chp_el_eff if chp_el_eff > 0 else 0.0
+gas_to_chp_gj = gas_to_chp_mwh * gj_per_mwh
+gas_to_chp_smc = gas_to_chp_mwh * smc_per_mwh
 
-total_gas_smc = total_gas_mwh * smc_per_mwh
-chp_gas_vs_total_pct = (gas_needed_gj / total_gas_gj * 100) if total_gas_gj > 0 else 0.0
-# Residual electricity from grid
-grid_electricity_mwh = total_electricity_mwh - chp_electricity_mwh
-# ---- Nice summary table ----
+# Useful thermal energy recovered from CHP
+chp_useful_heat_mwh = gas_to_chp_mwh * chp_th_eff
+chp_useful_heat_gj = chp_useful_heat_mwh * gj_per_mwh
+
+# -------------------------------------------------------
+# Process thermal demand and residual direct gas demand
+process_thermal_demand_mwh = total_gas_mwh
+process_thermal_demand_gj = process_thermal_demand_mwh * gj_per_mwh
+process_thermal_demand_smc = process_thermal_demand_mwh * smc_per_mwh
+
+residual_process_gas_mwh = max(process_thermal_demand_mwh - chp_useful_heat_mwh, 0.0)
+residual_process_gas_gj = residual_process_gas_mwh * gj_per_mwh
+residual_process_gas_smc = residual_process_gas_mwh * smc_per_mwh
+
+# -------------------------------------------------------
+# Total gas purchased from grid
+gas_from_grid_mwh = gas_to_chp_mwh + residual_process_gas_mwh
+gas_from_grid_gj = gas_from_grid_mwh * gj_per_mwh
+gas_from_grid_smc = gas_from_grid_mwh * smc_per_mwh
+
+# CHP thermal coverage of process demand
+chp_heat_coverage_pct = (
+    chp_useful_heat_mwh / process_thermal_demand_mwh * 100
+    if process_thermal_demand_mwh > 0 else 0.0
+)
+
+# CHP gas share over total gas purchased
+chp_gas_vs_total_pct = (
+    gas_to_chp_mwh / gas_from_grid_mwh * 100
+    if gas_from_grid_mwh > 0 else 0.0
+)
+
+
+# -------------------------------------------------------
+# Energy summary table
 df_energy_summary = pd.DataFrame({
     "Item": [
         "Total electricity demand",
-        "Electricity covered by CHP",
+        "Electricity from PV",
+        "Electricity from CHP",
         "Electricity from grid",
-        "Total gas demand",
+        "Process thermal demand",
+        "Useful heat from CHP",
+        "Residual process gas",
         "Gas to CHP",
-        "Gas to process"
+        "Gas from grid",
+        "Diesel fleet"
     ],
     "Electricity [MWh/y]": [
         total_electricity_mwh,
+        electricity_from_PV_mwh,
         chp_electricity_mwh,
         grid_electricity_mwh,
+        None,
+        None,
+        None,
         None,
         None,
         None
@@ -262,27 +329,78 @@ df_energy_summary = pd.DataFrame({
         None,
         None,
         None,
-        total_gas_mwh,
-        gas_needed_mwh,
-        gas_from_gas_grid_for_process_mwh
+        None,
+        process_thermal_demand_mwh,
+        chp_useful_heat_mwh,
+        residual_process_gas_mwh,
+        gas_to_chp_mwh,
+        gas_from_grid_mwh,
+        None
     ],
     "Gas [GJ/y]": [
         None,
         None,
         None,
-        total_gas_mwh * gj_per_mwh,
-        gas_needed_mwh * gj_per_mwh,
-        gas_from_gas_grid_for_process_mwh * gj_per_mwh
+        None,
+        process_thermal_demand_gj,
+        chp_useful_heat_gj,
+        residual_process_gas_gj,
+        gas_to_chp_gj,
+        gas_from_grid_gj,
+        None
     ],
     "Gas [Smc/y]": [
         None,
         None,
         None,
-        total_gas_mwh * smc_per_mwh,
-        gas_needed_mwh * smc_per_mwh,
-        gas_from_gas_grid_for_process_mwh * smc_per_mwh
+        None,
+        process_thermal_demand_smc,
+        chp_useful_heat_mwh * smc_per_mwh,
+        residual_process_gas_smc,
+        gas_to_chp_smc,
+        gas_from_grid_smc,
+        None
+    ],
+    "Diesel [MJ/y]": [
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        diesel_mj_y
+    ],
+    "Diesel [GJ/y]": [
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        diesel_gj_y
+    ],
+    "Diesel [MWh/y]": [
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        diesel_mwh_y
     ]
 })
+
+
+df_energy_summary = pd.concat([df_energy_summary], ignore_index=True)
 
 st.subheader("Energy summary")
 st.dataframe(
@@ -290,38 +408,57 @@ st.dataframe(
         "Electricity [MWh/y]": "{:,.0f}",
         "Gas [MWh/y]": "{:,.0f}",
         "Gas [GJ/y]": "{:,.0f}",
-        "Gas [Smc/y]": "{:,.0f}"
+        "Gas [Smc/y]": "{:,.0f}",
+        "Diesel [MJ/y]": "{:,.0f}",
+        "Diesel [GJ/y]": "{:,.0f}",
+        "Diesel [MWh/y]": "{:,.0f}"
     }),
     use_container_width=True
 )
 
-# ------------------------Sankey nodes----------------------
+# -------------------------------------------------------
+# Sankey in MWh only
+#------------------------------------------------
 labels = [
     "Gas grid",
     "CHP",
-    "Process gas demand",
-    "Electricity demand",
-    "Grid electricity"
+    "Process thermal demand",
+    "Useful heat from CHP",
+    "Residual process gas",
+    "PV electricity",
+    "Grid electricity",
+    "Electricity demand"
 ]
 
-# Sankey links
 source = [
     0,  # Gas grid -> CHP
-    0,  # Gas grid -> Process gas demand
+    0,  # Gas grid -> Residual process gas
+    1,  # CHP -> Useful heat from CHP
+    3,  # Useful heat from CHP -> Process thermal demand
+    4,  # Residual process gas -> Process thermal demand
+    5,  # PV electricity -> Electricity demand
     1,  # CHP -> Electricity demand
-    4   # Grid electricity -> Electricity demand
+    6   # Grid electricity -> Electricity demand
 ]
 
 target = [
     1,
-    2,
+    4,
     3,
-    3
+    2,
+    2,
+    7,
+    7,
+    7
 ]
 
 value = [
-    gas_needed_mwh,
-    gas_from_gas_grid_for_process_mwh,
+    gas_to_chp_mwh,
+    residual_process_gas_mwh,
+    chp_useful_heat_mwh,
+    chp_useful_heat_mwh,
+    residual_process_gas_mwh,
+    electricity_from_PV_mwh,
     chp_electricity_mwh,
     grid_electricity_mwh
 ]
@@ -342,7 +479,7 @@ fig = go.Figure(go.Sankey(
 ))
 
 fig.update_layout(
-    title_text="Energy flow with CHP",
+    title_text="Energy flow (MWh/y)",
     font_size=12
 )
 
@@ -379,6 +516,7 @@ with c2:
     step=1,
     key="ele_price"
 )
+gas_needed_mwh=0
 
 gas_bill=gas_price*gas_needed_mwh
 ele_bill=ele_price*grid_electricity_mwh
@@ -431,31 +569,6 @@ st.markdown(
     - **Scope 1 emissions** from the direct combustion of natural gas on site
     - **Scope 2 emissions** from electricity imported from the grid
 
-    For **Scope 1**, emissions are calculated using an inventory-based methodology:
-    the amount of natural gas burned is multiplied by the applicable emission factor.
-
-    For natural gas, a simplified emission factor is used:
-    - **0.0561 tCO₂/GJ**
-    - equivalent to **0.20196 tCO₂/MWh_gas**
-
-    In the CHP configuration, it is good practice to keep the gas flows separated in order
-    to clearly identify the sources of direct emissions:
-    - **gas burned in the CHP** for on-site electricity generation
-    - **residual process gas** burned in conventional thermal equipment
-
-    Therefore, direct CO₂ emissions are calculated as:
-
-    - **Scope 1 CO₂ from CHP = Gas to CHP × emission factor**
-    - **Scope 1 CO₂ from burners = Residual process gas × emission factor**
-    - **Total Scope 1 CO₂ = CO₂ from CHP + CO₂ from burners**
-
-    Separately, **Scope 2 emissions** account for indirect emissions associated with
-    **electricity imported from the grid**. These emissions are not generated physically
-    at the plant, but arise from the off-site production of purchased electricity.
-
-    This distinction ensures that on-site fuel combustion is properly captured under
-    **Scope 1 / EU ETS-relevant direct emissions**, while grid electricity is reported
-    under **Scope 2** as indirect energy-related emissions.
     """
 )
 # ---- CO2 assumptions ----
@@ -463,7 +576,7 @@ st.markdown(
 co2_factor_gas_t_per_mwh = conv["emissions"]["natural_gas"]["co2_factor_t_per_mwh"]
 co2_factor_gas_t_per_gj = conv["emissions"]["natural_gas"]["co2_factor_t_per_gj"]
 co2_factor_grid_t_per_mwh = conv["emissions"]["grid_it"]["co2_factor_t_per_mwh"]
-
+gas_from_gas_grid_for_process_mwh=0
 # ---- Scope 1 emissions: direct natural gas combustion ----
 scope1_chp_t = gas_needed_mwh * co2_factor_gas_t_per_mwh
 scope1_process_t = gas_from_gas_grid_for_process_mwh * co2_factor_gas_t_per_mwh
@@ -580,6 +693,7 @@ h2_kwh_per_kg = conv["hydrogen"]["conversion_factors"]["kWh_per_kg"]
 
 # Baseline natural gas demand from your existing variables
 total_energy_mwh = total_gas_mwh
+total_gas_smc=0
 natural_gas_smc_base = total_gas_smc
 
 # Baseline NG energy content

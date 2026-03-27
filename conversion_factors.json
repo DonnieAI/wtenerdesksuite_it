@@ -21,6 +21,16 @@
       "MWh_per_kWh": 0.001
     }
   },
+  "diesel":{
+    "conversion_factors":{
+      "MJ_per_liter":35.8
+
+
+    }
+
+
+  },
+    
   "natural_gas": {
     "reference_basis": {
       "Smc_per_MWh": 93.545
@@ -62,6 +72,10 @@
     },
     "grid_it": {
       "co2_factor_t_per_mwh": 0.2665
+    },
+    "diesel": {
+      "co2_factor_t_per_mwh": 0.267
     }
+
   }
 }

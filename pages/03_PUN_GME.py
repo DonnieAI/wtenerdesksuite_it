@@ -51,7 +51,6 @@ palette_other = [
 ]
 
 
-
 #LOAD DATA
 HISTORY_DIR = Path("pun_parquet/history")
 LIVE_2026 = Path("pun_parquet/live/pun_2026.parquet")
@@ -65,7 +64,7 @@ def dir_mtime_key(folder: Path, pattern: str) -> float:
 def file_mtime_key(path: Path) -> float:
     return path.stat().st_mtime if path.exists() else 0.0
 
-@st.cache_data(show_spinner=False)
+#@st.cache_data(show_spinner=False)
 def load_history(_key: float) -> pd.Series:
     files = sorted(HISTORY_DIR.glob("pun_*.parquet"))
     dfs = [pd.read_parquet(p) for p in files]
@@ -78,7 +77,7 @@ def load_history(_key: float) -> pd.Series:
         ts = ts.groupby(level=0).mean().sort_index()
     return ts
 
-@st.cache_data(show_spinner=False)
+#@st.cache_data(show_spinner=False)
 def load_live_2026(_key: float) -> pd.Series:
     if not LIVE_2026.exists():
         return pd.Series(dtype="float64", name="pun")
@@ -100,11 +99,17 @@ def load_live_2026(_key: float) -> pd.Series:
     return ts
 
 history_ts = load_history(dir_mtime_key(HISTORY_DIR, "pun_*.parquet"))
+
+
 live_ts = load_live_2026(file_mtime_key(LIVE_2026))
 
 pun_hourly_ts = pd.concat([history_ts, live_ts]).sort_index()
 pun_hourly_ts.to_csv("pun_hourly_data.csv")
+# convert Series values to numeric
+pun_hourly_ts = pd.to_numeric(pun_hourly_ts, errors="coerce")
 
+pun_hourly_ts.to_csv("pun_hourly_data.csv")
+pun_monthly_ts = pun_hourly_ts.resample("MS").mean()
 
 pun_monthly_ts=pun_hourly_ts.resample("MS").mean()
 

@@ -5,7 +5,7 @@ from pathlib import Path
 #https://gme.mercatoelettrico.org/it-it/Home/Esiti/Elettricita/MGP/Statistiche/DatiStorici#IntestazioneGrafico
 DATA_DIR = Path("pun_data")
 #files = sorted(DATA_DIR.glob("PUN_*.csv"))
-year=2009
+year=2026
 file=f"{DATA_DIR}/PUN_{year}.csv"
 df = pd.read_csv(file)
 
