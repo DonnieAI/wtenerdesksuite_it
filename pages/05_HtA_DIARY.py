@@ -8,6 +8,8 @@ from pathlib import Path
 import importlib
 from markdown import markdown
 
+import pulp as pl
+
 st.set_page_config(page_title="Dashboard", layout="wide")
 from utils import apply_style_and_logo
 from supporting_functions.editing_function import styled_scrollable_markdown
@@ -277,7 +279,6 @@ boiler_losses_mwh = fuel_boiler_input_mwh - th_boiler_useful_mwh
 # the first assumption her is that the natrual gas is used BUT LNG or LPG or Diesel
 # ng= natual gas
 
-
 # Natural gas purchase assumption
 ng_purchased_mwh = total_fuel_purchased_mwh
 ng_purchased_smc = ng_purchased_mwh * smc_per_mwh
@@ -415,7 +416,7 @@ with c1:
         "Natural gas price [EUR/MWh]",
         min_value=0,
         max_value=400,
-        value=75,
+        value=100,
         step=1,
         key="gas_price"
     )
@@ -425,7 +426,7 @@ with c2:
         "Electricity price [EUR/MWh]",
         min_value=0,
         max_value=400,
-        value=125,
+        value=100,
         step=1,
         key="electricity_price"
     )
@@ -607,3 +608,334 @@ co2_ets1_burden_eur = co2_emissions_under_eua_t * co2_eua_price
 
 #st.info(f"ETS 1 cost: {co2_ets1_burden_eur / 1_000_000:,.2f} MEUR/y")
 st.metric("ETS 1 cost [EUR/y]", f"{co2_ets1_burden_eur / 1_000_000:,.2f} MEUR/y")
+
+
+# =========================
+# Fuel switching + electrification optimization 
+# =========================
+
+st.divider()
+st.header("🧮 Fuel mix optimization")
+
+# -------------------------
+# User inputs
+# -------------------------
+st.subheader("Energy and CO₂ price assumptions")
+
+col_price, col_avail, col_policy = st.columns(3)
+
+# --------------------------------
+# COLUMN 1: prices
+# --------------------------------
+with col_price:
+    st.markdown("### Prices [EUR/MWh]")
+
+    GasPrice = st.slider(
+        "Natural gas price [EUR/MWh]",
+        min_value=0,
+        max_value=400,
+        value=100,
+        step=1,
+        key="opt_gas_price"
+    )
+
+    BiomethanePrice = st.slider(
+        "Biomethane price [EUR/MWh]",
+        min_value=0,
+        max_value=400,
+        value=150,
+        step=1,
+        key="biomethane_price"
+    )
+
+    H2Price = st.slider(
+        "Hydrogen price [EUR/MWh]",
+        min_value=0,
+        max_value=400,
+        value=180,
+        step=1,
+        key="h2_price"
+    )
+
+    ElePrice = st.slider(
+        "Grid electricity price [EUR/MWh]",
+        min_value=0,
+        max_value=400,
+        value=125,
+        step=1,
+        key="opt_ele_price"
+    )
+
+    RenElecPrice = st.slider(
+        "Renewable electricity price [EUR/MWh]",
+        min_value=0,
+        max_value=400,
+        value=95,
+        step=1,
+        key="renewable_electricity_price"
+    )
+
+# --------------------------------
+# COLUMN 2: availability
+# --------------------------------
+with col_avail:
+    st.markdown("### Availability [MWh/y]")
+
+    st.text_input(
+        "Natural gas availability [MWh/y]",
+        value="Not bounded",
+        disabled=True,
+        key="ng_availability_placeholder"
+    )
+
+    BiomethaneMax = st.number_input(
+        "Biomethane availability [MWh/y]",
+        min_value=0.0,
+        max_value=float(ng_purchased_mwh),
+        value=15000.0,
+        step=10.0,
+        key="max_biomethane_mwh"
+    )
+
+    H2Max = st.number_input(
+        "Hydrogen availability [MWh/y]",
+        min_value=0.0,
+        max_value=float(ng_purchased_mwh),
+        value=3000.0,
+        step=10.0,
+        key="max_h2_mwh"
+    )
+
+    st.text_input(
+        "Grid electricity availability [MWh/y]",
+        value="Not bounded",
+        disabled=True,
+        key="grid_availability_placeholder"
+    )
+
+    RenElecMax = st.number_input(
+        "Renewable electricity availability [MWh/y]",
+        min_value=0.0,
+        max_value=float(ee_purchased_mwh) if ee_purchased_mwh > 0 else 1000.0,
+        value=min(100.0, float(ee_purchased_mwh)) if ee_purchased_mwh > 0 else 100.0,
+        step=10.0,
+        key="max_renewable_electricity_mwh"
+    )
+
+# --------------------------------
+# COLUMN 3: policy / market constraints
+# --------------------------------
+with col_policy:
+    st.markdown("### Market constraints")
+
+    CO2Price = st.slider(
+        "CO₂ price [EUR/tCO₂]",
+        min_value=0,
+        max_value=200,
+        value=70,
+        step=1,
+        key="co2_EUA_price"
+    )
+
+    H2BlendMax = st.slider(
+        "Maximum H₂ share in fuel energy mix [%]",
+        min_value=0,
+        max_value=100,
+        value=7,
+        step=1,
+        key="max_h2_share_pct"
+    )
+
+
+
+
+# -----------------------------
+# OPTIMIZATION MODEL PULP
+# -----------------------------
+
+# Baseline purchased energy to be optimized
+GasPurchaseBaseline = ng_purchased_mwh      # purchased gas from grid [MWh/y]
+ElePurchaseBaseline = ee_purchased_mwh      # purchased electricity from grid [MWh/y]
+
+# Fixed assumptions
+EF_NG = 0.202
+
+# Use user inputs
+H2BlendMax_frac = H2BlendMax / 100.0
+
+
+# -----------------------------
+# Model
+# -----------------------------
+model = pl.LpProblem("Minimize_Energy_Bill", pl.LpMinimize)
+
+# -----------------------------
+# Decision variables [MWh/y]
+# -----------------------------
+Q_NG = pl.LpVariable("Q_NG", lowBound=0)
+Q_BM = pl.LpVariable("Q_BM", lowBound=0)
+Q_H2 = pl.LpVariable("Q_H2", lowBound=0)
+
+Q_Grid = pl.LpVariable("Q_Grid", lowBound=0)
+Q_RenElec = pl.LpVariable("Q_RenElec", lowBound=0)
+
+# -----------------------------
+# Objective
+# -----------------------------
+model += (
+    GasPrice * Q_NG
+    + BiomethanePrice * Q_BM
+    + H2Price * Q_H2
+    + ElePrice * Q_Grid
+    + RenElecPrice * Q_RenElec
+    + CO2Price * EF_NG * Q_NG
+), "Total_Energy_Bill"
+
+# -----------------------------
+# Constraints
+# -----------------------------
+# Gas purchase balance
+model += Q_NG + Q_BM + Q_H2 == GasPurchaseBaseline, "Gas_Purchase_Balance"
+
+# Electricity purchase balance
+model += Q_Grid + Q_RenElec == ElePurchaseBaseline, "Electricity_Purchase_Balance"
+
+# Fuel availability
+model += Q_BM <= BiomethaneMax, "Biomethane_Availability"
+model += Q_H2 <= H2Max, "Hydrogen_Availability"
+
+# Renewable electricity availability
+model += Q_RenElec <= RenElecMax, "Renewable_Electricity_Availability"
+
+# Hydrogen blend limit
+model += Q_H2 <= H2BlendMax_frac * (Q_NG + Q_BM + Q_H2), "H2_Blend_Limit"
+
+# -----------------------------
+# Solve
+# -----------------------------
+solver = pl.PULP_CBC_CMD(msg=False)
+model.solve(solver)
+
+
+# -----------------------------
+# Results
+# -----------------------------
+opt_Q_NG = pl.value(Q_NG)
+opt_Q_BM = pl.value(Q_BM)
+opt_Q_H2 = pl.value(Q_H2)
+opt_Q_Grid = pl.value(Q_Grid)
+opt_Q_RenElec = pl.value(Q_RenElec)
+
+opt_total_bill = pl.value(model.objective)
+opt_carbon_cost = CO2Price * EF_NG * opt_Q_NG
+opt_emissions = EF_NG * opt_Q_NG
+
+
+
+# -----------------------------
+# Baseline (before optimization)
+# -----------------------------
+base_Q_NG = ng_purchased_mwh
+base_Q_BM = 0.0
+base_Q_H2 = 0.0
+base_Q_Grid = ee_purchased_mwh
+base_Q_RenElec = 0.0
+
+base_fuel_elec_cost = (
+    GasPrice * base_Q_NG
+    + BiomethanePrice * base_Q_BM
+    + H2Price * base_Q_H2
+    + ElePrice * base_Q_Grid
+    + RenElecPrice * base_Q_RenElec
+)
+
+base_carbon_cost = CO2Price * EF_NG * base_Q_NG
+base_total_bill = base_fuel_elec_cost + base_carbon_cost
+base_emissions = EF_NG * base_Q_NG
+
+# -----------------------------
+# Optimized case
+# -----------------------------
+opt_fuel_elec_cost = (
+    GasPrice * opt_Q_NG
+    + BiomethanePrice * opt_Q_BM
+    + H2Price * opt_Q_H2
+    + ElePrice * opt_Q_Grid
+    + RenElecPrice * opt_Q_RenElec
+)
+
+opt_carbon_cost = CO2Price * EF_NG * opt_Q_NG
+opt_total_bill = opt_fuel_elec_cost + opt_carbon_cost
+opt_emissions = EF_NG * opt_Q_NG
+
+# -----------------------------
+# Comparison table
+# -----------------------------
+comparison_df = pd.DataFrame({
+    "Metric": [
+        "Natural gas [MWh/y]",
+        "Biomethane [MWh/y]",
+        "Hydrogen [MWh/y]",
+        "Grid electricity [MWh/y]",
+        "Renewable electricity [MWh/y]",
+        "Fuel + electricity cost [EUR/y]",
+        "CO2 cost [EUR/y]",
+        "Total energy bill [EUR/y]",
+        "CO2 emissions [tCO2/y]"
+    ],
+    "Before optimization": [
+        base_Q_NG,
+        base_Q_BM,
+        base_Q_H2,
+        base_Q_Grid,
+        base_Q_RenElec,
+        base_fuel_elec_cost,
+        base_carbon_cost,
+        base_total_bill,
+        base_emissions
+    ],
+    "After optimization": [
+        opt_Q_NG,
+        opt_Q_BM,
+        opt_Q_H2,
+        opt_Q_Grid,
+        opt_Q_RenElec,
+        opt_fuel_elec_cost,
+        opt_carbon_cost,
+        opt_total_bill,
+        opt_emissions
+    ]
+})
+
+comparison_df["Delta"] = (
+    comparison_df["After optimization"] - comparison_df["Before optimization"]
+)
+
+comparison_df["Delta %"] = comparison_df.apply(
+    lambda row: 100 * row["Delta"] / row["Before optimization"]
+    if row["Before optimization"] != 0 else None,
+    axis=1
+)
+
+st.subheader("Before vs After optimization")
+st.dataframe(
+    comparison_df.style.format({
+        "Before optimization": "{:,.2f}",
+        "After optimization": "{:,.2f}",
+        "Delta": "{:,.2f}",
+        "Delta %": "{:,.1f}"
+    }),
+    use_container_width=True
+)
+
+# -----------------------------
+# KPIs
+# -----------------------------
+bill_saving = base_total_bill - opt_total_bill
+co2_reduction = base_emissions - opt_emissions
+
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Baseline bill [EUR/y]", f"{base_total_bill:,.0f}")
+c2.metric("Optimized bill [EUR/y]", f"{opt_total_bill:,.0f}")
+c3.metric("Savings [EUR/y]", f"{bill_saving:,.0f}")
+c4.metric("CO2 reduction [tCO2/y]", f"{co2_reduction:,.0f}")
