@@ -1,0 +1,176 @@
+{
+  "metadata": {
+    "json_type": "gas_commercial_offer",
+    "schema_version": "gas_commercial_offer_v3_separate_regulated_charges",
+    "country": "Italy",
+    "commodity": "Natural gas",
+    "customer_segment": "Non-domestic / business",
+    "source_file": "76731_SCHEDASINT.pdf.coredownload.pdf",
+    "important_note": "This JSON contains only supplier/commercial offer data. Regulated ARERA charges, excise duties and VAT must be loaded from a separate regulated charges JSON."
+  },
+  "seller": {
+    "name": "Dolomiti Energia Mercato SpA",
+    "website": "www.dolomitienergia.it",
+    "phone": "800.364.364",
+    "registered_office": "via Fersina 23, 38123 Trento (TN)",
+    "email": "clienti.impresa@dolomitienergia.it",
+    "pec": "info.commerciale@cert.dolomitienergia.it",
+    "tax_vat_company_register": "01812630224"
+  },
+  "offer": {
+    "name": "DOLOMITI FLEX GAS BUSINESS",
+    "code": "000139GSVML01XXW76731WB000000000",
+    "valid_from": "2026-05-28",
+    "valid_to": "2026-09-15",
+    "contract_duration": {
+      "type": "indefinite",
+      "label_it": "Indeterminata"
+    },
+    "eligibility": {
+      "pdr_type": "Altri usi",
+      "annual_consumption_limit_smc": 100000,
+      "annual_consumption_limit_text": "Consumo fino a 100.000 Smc/anno",
+      "customer_type": "Clienti non domestici"
+    },
+    "economic_conditions_duration": {
+      "duration_months_from_activation": 24,
+      "renewal": {
+        "type": "tacit renewal",
+        "renewal_period_months": 12,
+        "same_conditions_by_default": true,
+        "supplier_may_change_conditions_with_notice": true
+      }
+    }
+  },
+  "commercial_components": {
+    "commodity_price": {
+      "price_type": "variable_indexed",
+      "index": {
+        "name": "PSV-DA",
+        "description": "Monthly arithmetic average of daily PSV gas wholesale transaction prices published as PSV Price Assessment in ICIS Heren European Spot Gas Markets",
+        "periodicity": "monthly"
+      },
+      "spread": {
+        "value": 0.11,
+        "unit": "EUR/Smc"
+      },
+      "formula": "PSV-DA + 0.11 EUR/Smc",
+      "taxes_excluded": true
+    },
+    "fixed_fee": {
+      "value": 180.0,
+      "unit": "EUR/year",
+      "taxes_excluded": true
+    },
+    "discounts_or_bonuses": {
+      "present": false,
+      "description": "Non sono previsti sconti e/o bonus."
+    },
+    "additional_products_services": {
+      "present": false,
+      "description": "Non sono previsti prodotti e/o servizi aggiuntivi."
+    },
+    "other_charges": {
+      "regulated_transport_distribution_and_system_charges": {
+        "included_by_reference": true,
+        "source_url_text_in_offer": "https://www.arera.it/consumatori/valori-trasporto-oneri-generali-nondomestici-gas",
+        "note": "The offer states that updated tariffs for natural gas network use and general system charges are available from ARERA."
+      },
+      "taxes": {
+        "included_by_reference": true,
+        "source_url_text_in_offer": "https://www.dolomitienergia.it/assistenza/diritti-e-tutele-del-cliente/normativa.html",
+        "note": "The offer references tax rates but does not specify numerical tax values in the summary sheet."
+      }
+    }
+  },
+  "billing_and_payment": {
+    "payment_method": "SEPA Direct Debit (S.D.D.)",
+    "billing_frequency": "monthly",
+    "invoice_modes": [
+      "Bollett@mail",
+      "Formato cartaceo"
+    ],
+    "paper_invoice_fee": 0.0,
+    "installments": {
+      "available": true,
+      "description": "Bills may be paid in instalments in the cases and according to the methods set out in the general supply conditions."
+    }
+  },
+  "guarantees": {
+    "deposit_required_when_payment_not_sdd": true,
+    "deposit_eur_per_pdr": [
+      {
+        "annual_consumption_from_smc": 0,
+        "annual_consumption_to_smc": 500,
+        "deposit_eur": 25.0
+      },
+      {
+        "annual_consumption_from_smc": 501,
+        "annual_consumption_to_smc": 5000,
+        "deposit_eur": 77.0
+      },
+      {
+        "annual_consumption_from_smc": 5001,
+        "annual_consumption_to_smc": null,
+        "deposit_eur": null,
+        "description": "For other PDR types, any security deposit amount is negotiated between the parties."
+      }
+    ]
+  },
+  "activation_and_service_requests": {
+    "supplier_service_fee_per_distributor_request": {
+      "value": 25.0,
+      "unit": "EUR/request"
+    },
+    "distributor_charges_pass_through": true,
+    "reading_data_source": "Consumption data made available by the local distributor; otherwise validated self-readings or estimated consumption based on historical consumption."
+  },
+  "late_payment": {
+    "days_1_to_10_interest": "Italian legal interest rate",
+    "from_day_11_interest": "ECB official reference rate + 3.5 percentage points",
+    "supply_suspension_possible": true
+  },
+  "withdrawal": {
+    "customer_switching": {
+      "allowed_any_time": true,
+      "requires_new_supplier_mandate": true
+    },
+    "supplier_withdrawal_notice_months": 6,
+    "customer_cessation": {
+      "allowed_any_time": true,
+      "without_charges": true,
+      "method": "written communication by registered letter A/R or PEC"
+    },
+    "early_withdrawal_charges": {
+      "present": true,
+      "applies_to": "Large customers only when withdrawal does not respect the notice period in the general conditions",
+      "not_applicable_otherwise": true
+    }
+  },
+  "regulated_components_reference": {
+    "must_be_loaded_separately": true,
+    "required_regulated_json_type": "gas_regulated_charges",
+    "matching_logic": [
+      "PDR tariff/geographic zone or distribution ambito",
+      "regulatory validity period",
+      "customer type: non-domestic / altri usi",
+      "annual consumption bracket"
+    ],
+    "offer_pdf_reference_text": "https://www.arera.it/consumatori/valori-trasporto-oneri-generali-nondomestici-gas"
+  },
+  "calculator_defaults": {
+    "psv_da_eur_smc": 0.493117,
+    "annual_consumption_smc": 100000,
+    "meter_class": "C_gt_G40",
+    "include_excise": true,
+    "include_vat": true,
+    "vat_rate": 0.22
+  },
+  "validation_flags": {
+    "commercial_offer_validity_captured": true,
+    "annual_consumption_limit_captured": true,
+    "regulated_tariff_snapshot_included": false,
+    "regulated_charges_are_separate": true,
+    "tax_values_are_separate": true
+  }
+}

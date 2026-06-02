@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "json_type": "gas_system_charges",
+    "country": "Italy",
+    "service": "Oneri generali gas - componenti variabili e quota UG2",
+    "valid_from": "2026-01-01",
+    "valid_to": null,
+    "period_label": "2026-Q1 / valori confermati per 2026 dove applicabile",
+    "units": {
+      "variable_charges": "cEUR/Smc",
+      "fixed_charges": "EUR/year"
+    },
+    "scope": [
+      "Oneri generali gas non legati alle quote fisse contatore/distribuzione.",
+      "Da usare insieme a un JSON ARERA distribuzione/misura per ambito e a un JSON commerciale offerta."
+    ],
+    "confirmed_components": [
+      "GS",
+      "RS",
+      "UG1",
+      "UG2_fixed",
+      "UG2c",
+      "UG3INT",
+      "UG3UI",
+      "UG3FT",
+      "RE_by_class"
+    ],
+    "quarterly_updated_components": [
+      "GS",
+      "RE",
+      "RS",
+      "UG1"
+    ],
+    "confirmed_from_previous_resolutions": [
+      "UG2",
+      "UG3"
+    ],
+    "data_quality": {
+      "is_complete_template_for_streamlit_calculator": true,
+      "requires_re_class_selection": true,
+      "notes": [
+        "La componente RE è strutturata per classe; il calcolo deve selezionare la classe RE applicabile.",
+        "La tabella principale contiene re_pre2023_ceur_smc=0.0 per evitare doppio conteggio: usare re_component_281_2025_r_com per RE.",
+        "UG3 totale è riportato anche come ug3_total_ceur_smc per controllo, ma il calcolo deve sommare UG3INT + UG3UI + UG3FT oppure usare una sola rappresentazione, non entrambe."
+      ]
+    },
+    "sources_summary": [
+      "GS, RS e UG1: tabella fornita dall'utente per componente tariffaria GS/RS/UG1.",
+      "UG2c e quota fissa UG2: Delibera 126/2025/R/gas Allegato A.",
+      "UG3INT, UG3UI, UG3FT: valori dal 1 aprile 2024 della tabella UG3 fornita dall'utente.",
+      "RE: Delibera 281/2025/R/COM, componente tariffaria RE, strutturata per classe."
+    ]
+  },
+  "system_fixed_charges_eur_per_year": {
+    "ug2_fixed_eur_year": -21.63,
+    "unit": "EUR/PDR/year",
+    "valid_from": "2025-04-01",
+    "source": "126/2025/R/gas Allegato A - Elemento UG2c"
+  },
+  "system_variable_charges_ceur_per_smc_by_annual_consumption": [
+    {
+      "consumption_class": "1",
+      "system_consumption_class_gs_rs_ug1": "1-6",
+      "description_it": "0-120 Smc/anno",
+      "from_smc": 0,
+      "to_smc": 120,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 0.0,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    },
+    {
+      "consumption_class": "2",
+      "system_consumption_class_gs_rs_ug1": "1-6",
+      "description_it": "121-480 Smc/anno",
+      "from_smc": 121,
+      "to_smc": 480,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 4.96,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    },
+    {
+      "consumption_class": "3",
+      "system_consumption_class_gs_rs_ug1": "1-6",
+      "description_it": "481-1560 Smc/anno",
+      "from_smc": 481,
+      "to_smc": 1560,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 2.93,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    },
+    {
+      "consumption_class": "4",
+      "system_consumption_class_gs_rs_ug1": "1-6",
+      "description_it": "1561-5000 Smc/anno",
+      "from_smc": 1561,
+      "to_smc": 5000,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 2.37,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    },
+    {
+      "consumption_class": "5",
+      "system_consumption_class_gs_rs_ug1": "1-6",
+      "description_it": "5001-80000 Smc/anno",
+      "from_smc": 5001,
+      "to_smc": 80000,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 1.7,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    },
+    {
+      "consumption_class": "6",
+      "system_consumption_class_gs_rs_ug1": "1-6",
+      "description_it": "80001-200000 Smc/anno",
+      "from_smc": 80001,
+      "to_smc": 200000,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 0.71,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    },
+    {
+      "consumption_class": "7",
+      "system_consumption_class_gs_rs_ug1": "7-8",
+      "description_it": "oltre 200000 Smc/anno",
+      "from_smc": 200001,
+      "to_smc": null,
+      "gs_ceur_smc": 0.1826,
+      "rs_ceur_smc": 0.1409,
+      "ug1_ceur_smc": 1.7603,
+      "ug2c_ceur_smc": 0.0,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292,
+      "re_pre2023_ceur_smc": 0.0,
+      "notes": "RE non valorizzata in questo scaglione perché dipende dalla classe RE; usare il blocco re_component_281_2025_r_com."
+    }
+  ],
+  "ug2_component_126_2025_r_gas": {
+    "resolution": "126/2025/R/gas",
+    "table": "Allegato A - Tabella 1: Elemento UG2c della componente UG2",
+    "valid_from": "2025-04-01",
+    "fixed_charge_eur_per_pdr_year": -21.63,
+    "unit_fixed": "EUR/PDR/year",
+    "unit_variable": "cEUR/Smc",
+    "variable_charges_ceur_per_smc_by_annual_consumption": [
+      {
+        "consumption_class": "1",
+        "description_it": "0-120 Smc/anno",
+        "from_smc": 0,
+        "to_smc": 120,
+        "ug2c_ceur_smc": 0.0
+      },
+      {
+        "consumption_class": "2",
+        "description_it": "121-480 Smc/anno",
+        "from_smc": 121,
+        "to_smc": 480,
+        "ug2c_ceur_smc": 4.96
+      },
+      {
+        "consumption_class": "3",
+        "description_it": "481-1560 Smc/anno",
+        "from_smc": 481,
+        "to_smc": 1560,
+        "ug2c_ceur_smc": 2.93
+      },
+      {
+        "consumption_class": "4",
+        "description_it": "1561-5000 Smc/anno",
+        "from_smc": 1561,
+        "to_smc": 5000,
+        "ug2c_ceur_smc": 2.37
+      },
+      {
+        "consumption_class": "5",
+        "description_it": "5001-80000 Smc/anno",
+        "from_smc": 5001,
+        "to_smc": 80000,
+        "ug2c_ceur_smc": 1.7
+      },
+      {
+        "consumption_class": "6",
+        "description_it": "80001-200000 Smc/anno",
+        "from_smc": 80001,
+        "to_smc": 200000,
+        "ug2c_ceur_smc": 0.71
+      },
+      {
+        "consumption_class": "7",
+        "description_it": "oltre 200000 Smc/anno",
+        "from_smc": 200001,
+        "to_smc": null,
+        "ug2c_ceur_smc": 0.0
+      }
+    ]
+  },
+  "ug3_component_113_2024_r_com": {
+    "resolution": "113/2024/R/COM",
+    "table": "Tabella 8: Valori degli elementi della componente della tariffa obbligatoria UG3",
+    "unit": "cEUR/Smc",
+    "current_values": {
+      "valid_from": "2024-04-01",
+      "valid_to": null,
+      "ug3int_ceur_smc": 0.0387,
+      "ug3ui_ceur_smc": 0.0024,
+      "ug3ft_ceur_smc": 0.6881,
+      "ug3_total_ceur_smc": 0.7292
+    },
+    "calculation_note": "UG3 totale = UG3INT + UG3UI + UG3FT = 0.0387 + 0.0024 + 0.6881 = 0.7292 cEUR/Smc."
+  },
+  "re_component_281_2025_r_com": {
+    "resolution": "281/2025/R/COM",
+    "table": "Tabella 1: Componente tariffaria RE",
+    "unit": "cEUR/Smc",
+    "default_class": "CLASSE 0",
+    "class_selection_note_it": "Selezionare la classe RE applicabile al cliente/PDR. In assenza di informazioni usare CLASSE 0 solo come default tecnico e verificare in fattura/contratto.",
+    "classes": {
+      "CLASSE VAL": {
+        "description_it": "Classe VAL",
+        "brackets": [
+          {
+            "consumption_class": "1-6",
+            "description_it": "fino a 200000 Smc/anno",
+            "from_smc": 0,
+            "to_smc": 200000,
+            "re_overall_ceur_smc": 2.9417,
+            "re_g_ceur_smc": 0.5476,
+            "re_tee_ceur_smc": 0.4359,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          },
+          {
+            "consumption_class": "7-8",
+            "description_it": "oltre 200000 Smc/anno",
+            "from_smc": 200001,
+            "to_smc": null,
+            "re_overall_ceur_smc": 1.5611,
+            "re_g_ceur_smc": 0.2871,
+            "re_tee_ceur_smc": 0.2219,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          }
+        ]
+      },
+      "CLASSE GNE": {
+        "description_it": "Classe GNE",
+        "brackets": [
+          {
+            "consumption_class": "1-6",
+            "description_it": "fino a 200000 Smc/anno",
+            "from_smc": 0,
+            "to_smc": 200000,
+            "re_overall_ceur_smc": 0.5828,
+            "re_g_ceur_smc": 0.0,
+            "re_tee_ceur_smc": 0.0702,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          },
+          {
+            "consumption_class": "7-8",
+            "description_it": "oltre 200000 Smc/anno",
+            "from_smc": 200001,
+            "to_smc": null,
+            "re_overall_ceur_smc": 0.3588,
+            "re_g_ceur_smc": 0.0,
+            "re_tee_ceur_smc": 0.0355,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          }
+        ]
+      },
+      "CLASSE 0": {
+        "description_it": "Classe 0",
+        "brackets": [
+          {
+            "consumption_class": "1-6",
+            "description_it": "fino a 200000 Smc/anno",
+            "from_smc": 0,
+            "to_smc": 200000,
+            "re_overall_ceur_smc": 0.13,
+            "re_g_ceur_smc": 0.0,
+            "re_tee_ceur_smc": 0.0,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          },
+          {
+            "consumption_class": "7-8",
+            "description_it": "oltre 200000 Smc/anno",
+            "from_smc": 200001,
+            "to_smc": null,
+            "re_overall_ceur_smc": 0.13,
+            "re_g_ceur_smc": 0.0,
+            "re_tee_ceur_smc": 0.0,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          }
+        ]
+      },
+      "CLASSE FAT": {
+        "description_it": "Classe FAT",
+        "brackets": [
+          {
+            "consumption_class": "1-6",
+            "description_it": "fino a 200000 Smc/anno",
+            "from_smc": 0,
+            "to_smc": 200000,
+            "re_overall_ceur_smc": 0.13,
+            "re_g_ceur_smc": 0.0,
+            "re_tee_ceur_smc": 0.0,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          },
+          {
+            "consumption_class": "7-8",
+            "description_it": "oltre 200000 Smc/anno",
+            "from_smc": 200001,
+            "to_smc": null,
+            "re_overall_ceur_smc": 0.13,
+            "re_g_ceur_smc": 0.0,
+            "re_tee_ceur_smc": 0.0,
+            "remin_ceur_smc": 0.05,
+            "account_79_ceur_smc": 0.05,
+            "tippi_10_1_q_ceur_smc": 0.08
+          }
+        ]
+      }
+    }
+  }
+}

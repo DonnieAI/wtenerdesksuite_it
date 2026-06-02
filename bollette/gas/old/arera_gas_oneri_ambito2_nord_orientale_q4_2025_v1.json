@@ -1,0 +1,190 @@
+{
+  "metadata": {
+    "json_type": "gas_regulated_charges",
+    "schema_version": "gas_regulated_charges_v1_separate_from_offer",
+    "country": "Italy",
+    "commodity": "Natural gas",
+    "customer_segment": "Non-domestic / business",
+    "valid_from": "2025-10-01",
+    "valid_to": "2025-12-31",
+    "source_file": "Tariffa distribuzione gas naturale 4 trim 2025.pdf",
+    "tariff_zone": {
+      "code": 2,
+      "name": "Nord Orientale",
+      "regions": [
+        "Lombardia",
+        "Trentino-Alto Adige",
+        "Veneto",
+        "Friuli-Venezia Giulia",
+        "Emilia-Romagna"
+      ]
+    },
+    "units": {
+      "fixed_charges": "EUR/year",
+      "variable_charges": "cEUR/Smc",
+      "excise": "EUR/Smc",
+      "vat": "adimensional rate"
+    },
+    "notes": [
+      "This JSON is designed to be loaded separately from the commercial offer JSON.",
+      "T1 distribution, T1 measurement, QF COT, ST, VR and CE are handled as annual fixed charges in the calculator.",
+      "The uploaded legacy ARERA JSON contained ST/VR in consumption brackets; they are intentionally not used as variable charges in this corrected schema.",
+      "ST, VR and CE values are set to 0.0 by default because no reliable annual fixed value was available in the uploaded data. They are editable in the Streamlit page.",
+      "Accise/addizionale regionale are included as editable tax structures. Validate official rates before fiscal/billing use."
+    ]
+  },
+  "meter_classes": {
+    "A_leq_G6": "GdM minore o uguale a G6",
+    "B_G6_to_G40": "GdM superiore a G6 e inferiore o uguale a G40",
+    "C_gt_G40": "GdM superiore a G40"
+  },
+  "fixed_charges_eur_per_year_by_meter_class": {
+    "qf_distribution_t1": {
+      "A_leq_G6": 38.35,
+      "B_G6_to_G40": 280.48,
+      "C_gt_G40": 578.63
+    },
+    "qf_measurement_t1": {
+      "A_leq_G6": 26.95,
+      "B_G6_to_G40": 186.86,
+      "C_gt_G40": 383.77
+    },
+    "qf_commercialization_cot_t1": {
+      "A_leq_G6": 1.99,
+      "B_G6_to_G40": 1.99,
+      "C_gt_G40": 1.99
+    },
+    "st_fixed": {
+      "A_leq_G6": 0.0,
+      "B_G6_to_G40": 0.0,
+      "C_gt_G40": 0.0
+    },
+    "vr_fixed": {
+      "A_leq_G6": 0.0,
+      "B_G6_to_G40": 0.0,
+      "C_gt_G40": 0.0
+    },
+    "ce_fixed": {
+      "A_leq_G6": 0.0,
+      "B_G6_to_G40": 0.0,
+      "C_gt_G40": 0.0
+    },
+    "ug2_fixed": {
+      "A_leq_G6": 0.0,
+      "B_G6_to_G40": 0.0,
+      "C_gt_G40": 0.0
+    }
+  },
+  "variable_charges_ceur_per_smc_by_annual_consumption": [
+    {
+      "from_smc": 0,
+      "to_smc": 120,
+      "t3_dis": 0.0,
+      "ug1": 0.0,
+      "ug2c": 0.0387,
+      "ug3int": 0.0024,
+      "ug3ui": 0.6881,
+      "ug3ft": 0.3907,
+      "gs": 0.0,
+      "re_pre2023": 0.1186,
+      "rs": 0.0
+    },
+    {
+      "from_smc": 121,
+      "to_smc": 480,
+      "t3_dis": 7.2052,
+      "ug1": 4.96
+    },
+    {
+      "from_smc": 481,
+      "to_smc": 1560,
+      "t3_dis": 6.5948
+    },
+    {
+      "from_smc": 1561,
+      "to_smc": 5000,
+      "t3_dis": 6.6225
+    },
+    {
+      "from_smc": 5001,
+      "to_smc": 80000,
+      "t3_dis": 4.9484
+    },
+    {
+      "from_smc": 80001,
+      "to_smc": 200000,
+      "t3_dis": 2.5066
+    },
+    {
+      "from_smc": 200001,
+      "to_smc": 1000000,
+      "t3_dis": 1.2302,
+      "ug3ui": 0.1826,
+      "gs": 0.0,
+      "re_pre2023": 0.06,
+      "rs": 0.3422
+    },
+    {
+      "from_smc": 1000001,
+      "to_smc": null,
+      "t3_dis": 0.3422
+    }
+  ],
+  "component_mapping_for_bill": {
+    "spesa_trasporto_gestione_contatore": {
+      "fixed_components": [
+        "qf_distribution_t1",
+        "qf_measurement_t1",
+        "qf_commercialization_cot_t1",
+        "st_fixed",
+        "vr_fixed",
+        "ce_fixed"
+      ],
+      "variable_components": [
+        "t3_dis",
+        "ug1",
+        "rs"
+      ]
+    },
+    "spesa_oneri_di_sistema": {
+      "fixed_components": [
+        "ug2_fixed"
+      ],
+      "variable_components": [
+        "ug2c",
+        "ug3int",
+        "ug3ui",
+        "ug3ft",
+        "gs",
+        "re_pre2023"
+      ]
+    }
+  },
+  "taxes": {
+    "vat": {
+      "default_rate": 0.22,
+      "label": "IVA utenze non domestiche"
+    },
+    "excise_tax_eur_per_smc_by_annual_consumption": [
+      {
+        "from_smc": 0,
+        "to_smc": null,
+        "accisa_eur_smc": 0.0,
+        "note": "Placeholder editable in UI. Inserire aliquota ufficiale per uso industriale / civile e regione."
+      }
+    ],
+    "regional_surcharge_eur_per_smc_by_region": {
+      "default": 0.0,
+      "note": "Placeholder editable in UI. Addizionale regionale dipende dalla regione."
+    }
+  },
+  "legacy_source_reference": {
+    "copied_from": "italy_gas_distribution_tariff_q4_2025_ambito2.json",
+    "excluded_from_variable_charges": [
+      "st",
+      "vr",
+      "ce"
+    ],
+    "reason": "ST, VR and CE are treated as fixed charges in this calculator version."
+  }
+}

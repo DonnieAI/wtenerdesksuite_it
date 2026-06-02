@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "json_type": "gas_system_charges",
+    "country": "Italy",
+    "service": "Oneri generali gas - componenti GS RS UG1 + campi completi manuali",
+    "valid_from": "2026-01-01",
+    "valid_to": null,
+    "source": "Tabella utente per GS, RS, UG1; altri valori lasciati a 0.0 come campi compilabili manualmente",
+    "units": {
+      "variable_charges": "cEUR/Smc",
+      "fixed_charges": "EUR/year"
+    },
+    "notes": [
+      "GS, RS e UG1 sono valorizzati secondo la tabella fornita dall'utente.",
+      "UG2c, UG3INT, UG3UI, UG3FT e RE pre 2023 sono presenti nel JSON ma impostati a 0.0; aggiornare con fonte ARERA ufficiale quando disponibile.",
+      "Il calcolatore legge tutti questi campi dal JSON oneri generali, ma li lascia modificabili manualmente in Streamlit."
+    ]
+  },
+  "system_variable_charges_ceur_per_smc_by_annual_consumption": [
+    {
+      "consumption_class": "1-6",
+      "description_it": "fino a 200000 Smc/anno",
+      "from_smc": 0,
+      "to_smc": 200000,
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837,
+      "ug2c_ceur_smc": 0.0,
+      "ug3int_ceur_smc": 0.0,
+      "ug3ui_ceur_smc": 0.0,
+      "ug3ft_ceur_smc": 0.0,
+      "re_pre2023_ceur_smc": 0.0
+    },
+    {
+      "consumption_class": "7-8",
+      "description_it": "oltre 200000 Smc/anno",
+      "from_smc": 200001,
+      "to_smc": null,
+      "gs_ceur_smc": 0.1826,
+      "rs_ceur_smc": 0.1409,
+      "ug1_ceur_smc": 1.7603,
+      "ug2c_ceur_smc": 0.0,
+      "ug3int_ceur_smc": 0.0,
+      "ug3ui_ceur_smc": 0.0,
+      "ug3ft_ceur_smc": 0.0,
+      "re_pre2023_ceur_smc": 0.0
+    }
+  ],
+  "manual_fields_to_update_from_arera": [
+    "ug2c_ceur_smc",
+    "ug3int_ceur_smc",
+    "ug3ui_ceur_smc",
+    "ug3ft_ceur_smc",
+    "re_pre2023_ceur_smc"
+  ]
+}

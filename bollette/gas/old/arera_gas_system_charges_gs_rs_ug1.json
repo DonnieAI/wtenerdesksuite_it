@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "json_type": "gas_system_charges",
+    "country": "Italy",
+    "service": "Natural gas system charges - GS RS UG1",
+    "valid_from": null,
+    "valid_to": null,
+    "source": "ARERA table provided by user: componenti tariffarie GS, RS, UG1",
+    "units": {
+      "variable_charges": "cEUR/Smc"
+    },
+    "notes": [
+      "Contains only GS, RS and UG1 values by annual consumption class.",
+      "Other components such as UG2c, UG3, RE, taxes and regional surcharge are intentionally left to manual input or a separate source.",
+      "Values are in centesimi di euro per standard metro cubo."
+    ]
+  },
+  "system_variable_charges_ceur_per_smc_by_annual_consumption": [
+    {
+      "consumption_class": "1-6",
+      "from_smc": 0,
+      "to_smc": 200000,
+      "description_it": "fino a 200.000 Smc/anno",
+      "gs_ceur_smc": 0.3907,
+      "rs_ceur_smc": 0.2788,
+      "ug1_ceur_smc": 3.4837
+    },
+    {
+      "consumption_class": "7-8",
+      "from_smc": 200001,
+      "to_smc": null,
+      "description_it": "oltre 200.000 Smc/anno",
+      "gs_ceur_smc": 0.1826,
+      "rs_ceur_smc": 0.1409,
+      "ug1_ceur_smc": 1.7603
+    }
+  ]
+}

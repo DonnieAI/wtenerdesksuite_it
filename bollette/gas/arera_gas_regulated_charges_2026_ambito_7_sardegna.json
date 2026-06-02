@@ -1,0 +1,202 @@
+{
+  "metadata": {
+    "json_type": "gas_regulated_charges",
+    "schema_version": "2.0",
+    "country": "Italy",
+    "service": "Natural gas regulated distribution, metering and commercialization charges",
+    "regulator": "ARERA",
+    "deliberation": "574/2025/R/GAS",
+    "valid_from": "2026-01-01",
+    "valid_to": "2026-12-31",
+    "source_files": [
+      "574-2025-R-gas.pdf",
+      "574-2025-R-gas-ALLEGATO_A.xlsx"
+    ],
+    "source_table": "Allegato A - Tabella 1: Tariffa obbligatoria per l'anno 2026",
+    "tariff_zone": {
+      "code": 7,
+      "original_label": "AMBITO SARDEGNA",
+      "name": "Sardegna",
+      "regions": []
+    },
+    "units": {
+      "fixed_charges": "EUR/PDR/year",
+      "variable_charges": "cEUR/Smc",
+      "taxes": "EUR/Smc or ad valorem"
+    },
+    "notes": [
+      "This JSON contains ARERA mandatory tariff components from Allegato A, Table 1 of Deliberation 574/2025/R/GAS.",
+      "ST, VR and CE are treated as fixed EUR/PDR/year charges, consistent with the ARERA table structure.",
+      "UG1, UG2c, UG3, GS, RE and RS are not provided in Allegato A Table 1 and are set to 0.0 placeholders for calculator compatibility. Load/update a separate system-charges JSON when available.",
+      "Accise, regional surcharge and VAT are included as editable placeholders only; validate tax parameters before billing use."
+    ]
+  },
+  "meter_classes": {
+    "A_leq_G6": "GdM minore o uguale a G6 / G4-G6",
+    "B_G6_to_G40": "GdM superiore a G6 e inferiore o uguale a G40 / G10-G40",
+    "C_gt_G40": "GdM superiore a G40"
+  },
+  "fixed_charges_eur_per_year_by_meter_class": {
+    "qf_distribution_t1": {
+      "A_leq_G6": 1641.3799999999999,
+      "B_G6_to_G40": 2048.0099999999998,
+      "C_gt_G40": 2594.33
+    },
+    "qf_measurement_t1": {
+      "A_leq_G6": 28.99,
+      "B_G6_to_G40": 198.85,
+      "C_gt_G40": 427.07
+    },
+    "qf_commercialization_cot_t1": {
+      "A_leq_G6": 2.01,
+      "B_G6_to_G40": 2.01,
+      "C_gt_G40": 2.01
+    },
+    "st_fixed": {
+      "A_leq_G6": 0,
+      "B_G6_to_G40": 0,
+      "C_gt_G40": 0
+    },
+    "vr_fixed": {
+      "A_leq_G6": 0,
+      "B_G6_to_G40": 0,
+      "C_gt_G40": 0
+    },
+    "ce_fixed": {
+      "A_leq_G6": -1576.06,
+      "B_G6_to_G40": -1576.06,
+      "C_gt_G40": -1576.06
+    },
+    "ug2_fixed": {
+      "A_leq_G6": 0.0,
+      "B_G6_to_G40": 0.0,
+      "C_gt_G40": 0.0
+    }
+  },
+  "variable_charges_ceur_per_smc_by_annual_consumption": [
+    {
+      "from_smc": 0,
+      "to_smc": 120,
+      "t3_dis": 0,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 121,
+      "to_smc": 480,
+      "t3_dis": 25.8579,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 481,
+      "to_smc": 1560,
+      "t3_dis": 23.6671,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 1561,
+      "to_smc": 5000,
+      "t3_dis": 23.7667,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 5001,
+      "to_smc": 80000,
+      "t3_dis": 17.7586,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 80001,
+      "to_smc": 200000,
+      "t3_dis": 8.9955,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 200001,
+      "to_smc": 1000000,
+      "t3_dis": 4.4148,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    },
+    {
+      "from_smc": 1000001,
+      "to_smc": null,
+      "t3_dis": 1.2282,
+      "ug1": 0.0,
+      "rs": 0.0,
+      "ug2c": 0.0,
+      "ug3int": 0.0,
+      "ug3ui": 0.0,
+      "ug3ft": 0.0,
+      "gs": 0.0,
+      "re_pre2023": 0.0
+    }
+  ],
+  "taxes": {
+    "excise_tax_eur_per_smc_by_annual_consumption": [
+      {
+        "from_smc": 0,
+        "to_smc": null,
+        "accisa_eur_smc": 0.0
+      }
+    ],
+    "regional_surcharge_eur_per_smc_by_region": {
+      "default": 0.0
+    },
+    "vat": {
+      "default_rate": 0.22,
+      "notes": "IVA default 22% for non-domestic simulation; verify case-specific treatment."
+    }
+  },
+  "compatibility": {
+    "compatible_streamlit_page": "99_GAS_BILL_italian_v5_two_json_analyzer.py and v6",
+    "commercial_json_pairing_rule": "Pair with any gas commercial-offer JSON; choose this regulated JSON based on tariff zone and supply location."
+  }
+}
